@@ -11,31 +11,40 @@ class CredentialBase(BaseModel):
 
 
 class CredentialCreateRequest(CredentialBase):
-    name: str
-    domain_name: str
-    user_id: UUID
+    """
+    User is not required to send both domain and name
+    If there is no domain, then user must send name
+    If there is a domain in the request and no name, set name = domain
+    """
 
-
-class CredentialUpdateRequest(BaseModel):
-    user_id: str
-    id: str
-    name: str
-    domain_name: str
-    pass_encrypted: bytes
+    name: Optional[str] = None
+    domain: Optional[str] = None
+    username: Optional[str] = None
 
 
 class CredentialCreate(CredentialBase):
     name: str
-    domain_name: str
+    username: Optional[str]
+    domain: Optional[str]
     created_at: datetime
+
+
+class CredentialUpdateRequest(BaseModel):
+    user_id: UUID
+    id: UUID
+    name: str
+    username: str
+    domain: str
+    pass_encrypted: bytes
 
 
 class CredentialDbBase(CredentialBase):
     id: UUID
-    domain_name: str
+    domain: Optional[str] = None
     name: str
+    username: Optional[str] = None
     created_at: datetime
-    updated_at: datetime
+    updated_at: Optional[datetime] = None
 
     class Config:
         orm_mode = True
