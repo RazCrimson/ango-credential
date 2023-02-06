@@ -22,7 +22,7 @@ ADD ango_credential /app/ango_credential
 RUN poetry build && /venv/bin/pip install dist/*.whl
 
 FROM base as final
-LABEL org.opencontainers.image.source=https://github.com/madLads-2k19/ango_credential
+LABEL org.opencontainers.image.source=https://github.com/madLads-2k19/ango-credential
 
 RUN apk add --no-cache libffi libpq
 COPY --from=build /venv /venv
