@@ -1,7 +1,7 @@
 """create_credential_table
 
 Revision ID: e89f52323711
-Revises: 
+Revises:
 Create Date: 2023-02-06 11:31:32.776929
 
 """
