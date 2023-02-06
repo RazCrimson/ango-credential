@@ -38,15 +38,17 @@ def get_credential_by_user_id(user_id: UUID) -> List[CredentialDb] | None:
     return [CredentialDb.from_orm(credential) for credential in credentials] if credentials else None
 
 
-def get_credential_by_domain_name(domain_name: str) -> CredentialDb | None:
+def get_credential_by_domain(domain: str, user_id: UUID) -> list[CredentialDb]:
     session = db_connector.get_session()
-    credentials = list(session.query(CredentialOrm).filter(CredentialOrm.domain_name == domain_name))
-    return [CredentialDb.from_orm(credential) for credential in credentials] if credentials else None
+    credentials = list(
+        session.query(CredentialOrm).filter(CredentialOrm.domain == domain and CredentialOrm.user_id == user_id)
+    )
+    return [CredentialDb.from_orm(credential) for credential in credentials] if credentials else []
 
 
 def update(credential_data: CredentialUpdateRequest):
     session = db_connector.get_session()
-    session.query(CredentialOrm).filter(CredentialOrm.id == credential_data.id).update(**credential_data.dict())
+    session.query(CredentialOrm).filter(CredentialOrm.id == credential_data.id).update(credential_data.dict())
     session.commit()
 
 

@@ -1,8 +1,7 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config, pool, create_engine
-
 from alembic import context
+from sqlalchemy import create_engine, engine_from_config, pool
 
 from ango_credential.app.core.config import Settings
 
