@@ -1,0 +1,13 @@
+name: Test ango-credential
+
+on:
+  push:
+    pull_request:
+      - master
+  workflow_dispatch:
+
+jobs:
+  pr-check-workflow:
+    uses: madLads-2k19/ci-cd-actions/.github/workflows/check-pr.yaml@master
+    with:
+      py-module: ango_credential
